@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SimpleNorthwindsApi.Common
+﻿namespace SimpleNorthwindsApi.Common
 {
     public class Address
     {

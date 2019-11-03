@@ -2,11 +2,6 @@
 {
     public class NorthwindsConfiguration
     {
-        public string ConnectionString { get; }
-
-        public NorthwindsConfiguration(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        public string ConnectionString { get; set;  }
     }
 }

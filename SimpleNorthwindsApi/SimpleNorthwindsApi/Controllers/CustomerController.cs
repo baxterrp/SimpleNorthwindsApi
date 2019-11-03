@@ -51,7 +51,7 @@ namespace SimpleNorthwindsApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("/customers")]
+        [HttpDelete("/customers/{id}")]
         public async Task<IActionResult> DeleteCustomer([FromRoute]string id)
         {
             await _customerService.DeleteCustomer(id);

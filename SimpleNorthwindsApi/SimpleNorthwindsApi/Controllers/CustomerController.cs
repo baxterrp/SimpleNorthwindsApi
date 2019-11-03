@@ -14,10 +14,6 @@ namespace SimpleNorthwindsApi.Controllers
             _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
         }
 
-        /// <summary>
-        /// Returns all customers
-        /// </summary>
-        /// <returns><see cref="IActionResult"/></returns>
         [HttpGet("/customers")]
         public async Task<IActionResult> GetAllCustomers()
         {
@@ -26,11 +22,6 @@ namespace SimpleNorthwindsApi.Controllers
             return Ok(customers);
         }
 
-        /// <summary>
-        /// Returns a single <see cref="Common.Customer"/> by id/>
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet("/customers/{id}")]
         public async Task<IActionResult> FindCustomerById([FromRoute]string id)
         {
@@ -39,10 +30,6 @@ namespace SimpleNorthwindsApi.Controllers
             return Ok(customer);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="customer"></param>
         [HttpPost("/customers")]
         public async Task<IActionResult> AddNewCustomer([FromBody]Common.Customer customer)
         {

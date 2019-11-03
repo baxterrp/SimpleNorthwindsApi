@@ -20,10 +20,6 @@ namespace SimpleNorthwindsApi.Services.Customers
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
         }
 
-        /// <summary>
-        /// Implements <see cref="ICustomerService.AddNewCustomer(Customer)"/>
-        /// </summary>
-        /// <param name="customer"><see cref="Customer"/></param>
         public async Task AddNewCustomer(Customer customer)
         {
             var customerEntity = _mapper.MapFrom(customer);
@@ -36,10 +32,6 @@ namespace SimpleNorthwindsApi.Services.Customers
             await _customerRepository.DeleteCustomer(id);
         }
 
-        /// <summary>
-        /// Implements <see cref="ICustomerService.GetAllCustomers"/>
-        /// </summary>
-        /// <returns><see cref="IEnumerable{T}"/> of <see cref="Customer"/></returns>
         public async Task<IEnumerable<Customer>> GetAllCustomers()
         {
             var customers = await _customerRepository.SelectAllCustomers();
@@ -47,11 +39,6 @@ namespace SimpleNorthwindsApi.Services.Customers
             return customers.Select(customer => _mapper.MapTo(customer));
         }
 
-        /// <summary>
-        /// Implements <see cref="ICustomerService.GetCustomerById(string)"/>
-        /// </summary>
-        /// <param name="id">Unique id of <see cref="Customer"/></param>
-        /// <returns><see cref="Customer"/></returns>
         public async Task<Customer> GetCustomerById(string id)
         {
             return _mapper.MapTo(await _customerRepository.SelectCustomerById(id));

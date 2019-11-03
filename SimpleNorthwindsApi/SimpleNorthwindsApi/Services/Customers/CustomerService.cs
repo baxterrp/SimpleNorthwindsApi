@@ -31,6 +31,11 @@ namespace SimpleNorthwindsApi.Services.Customers
             await _customerRepository.InsertNewCustomer(customerEntity);
         }
 
+        public async Task DeleteCustomer(string id)
+        {
+            await _customerRepository.DeleteCustomer(id);
+        }
+
         /// <summary>
         /// Implements <see cref="ICustomerService.GetAllCustomers"/>
         /// </summary>

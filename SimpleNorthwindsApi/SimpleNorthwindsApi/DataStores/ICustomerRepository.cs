@@ -9,5 +9,6 @@ namespace SimpleNorthwindsApi.DataStores
         Task<IEnumerable<CustomerDataEntity>> SelectAllCustomers();
         Task<CustomerDataEntity> SelectCustomerById(string id);
         Task InsertNewCustomer(CustomerDataEntity customer);
+        Task DeleteCustomer(string id);
     }
 }

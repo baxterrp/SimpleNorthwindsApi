@@ -17,6 +17,16 @@ namespace SimpleNorthwindsApi.DataStores
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
+        public async Task DeleteCustomer(string id)
+        {
+            var sql = "DELETE FROM Customers WHERE [CustomerId] = @Id";
+
+            using (var connection = new SqlConnection(_configuration.ConnectionString))
+            {
+                await connection.ExecuteAsync(sql, new { Id = id });
+            }
+        }
+
         public async Task InsertNewCustomer(CustomerDataEntity customer)
         {
             var sql = $"INSERT INTO Customers (CustomerId, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax)" +

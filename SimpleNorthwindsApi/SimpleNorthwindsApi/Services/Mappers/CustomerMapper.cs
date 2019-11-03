@@ -6,10 +6,20 @@ namespace SimpleNorthwindsApi.Services.Mappers
 {
     public class CustomerMapper : IMapper<Customer, CustomerDataEntity>
     {
-        public CustomerDataEntity MapFrom(Customer poco)
+        public CustomerDataEntity MapFrom(Customer poco) => new CustomerDataEntity
         {
-            throw new NotImplementedException();
-        }
+            CustomerId = poco.Id,
+            ContactName = poco.Name,
+            CompanyName = poco.Company,
+            ContactTitle = poco.Title,
+            Address = poco.Address.Street,
+            City = poco.Address.City,
+            Region = poco.Address.Region,
+            PostalCode = poco.Address.Zip,
+            Country = poco.Address.Country,
+            Phone = poco.Phone,
+            Fax = poco.Fax
+        };
 
         public Customer MapTo(CustomerDataEntity entity) => new Customer
         {

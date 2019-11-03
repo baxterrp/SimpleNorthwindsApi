@@ -25,5 +25,30 @@ namespace SimpleNorthwindsApi.Controllers
 
             return Ok(customers);
         }
+
+        /// <summary>
+        /// Returns a single <see cref="Common.Customer"/> by id/>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("/customers/{id}")]
+        public async Task<IActionResult> FindCustomerById([FromRoute]string id)
+        {
+            var customer = await _customerService.GetCustomerById(id);
+
+            return Ok(customer);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customer"></param>
+        [HttpPost("/customers")]
+        public async Task<IActionResult> AddNewCustomer([FromBody]Common.Customer customer)
+        {
+            await _customerService.AddNewCustomer(customer);
+
+            return Ok();
+        }
     }
 }

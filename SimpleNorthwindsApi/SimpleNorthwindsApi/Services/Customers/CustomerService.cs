@@ -21,6 +21,17 @@ namespace SimpleNorthwindsApi.Services.Customers
         }
 
         /// <summary>
+        /// Implements <see cref="ICustomerService.AddNewCustomer(Customer)"/>
+        /// </summary>
+        /// <param name="customer"><see cref="Customer"/></param>
+        public async Task AddNewCustomer(Customer customer)
+        {
+            var customerEntity = _mapper.MapFrom(customer);
+
+            await _customerRepository.InsertNewCustomer(customerEntity);
+        }
+
+        /// <summary>
         /// Implements <see cref="ICustomerService.GetAllCustomers"/>
         /// </summary>
         /// <returns><see cref="IEnumerable{T}"/> of <see cref="Customer"/></returns>
@@ -29,6 +40,16 @@ namespace SimpleNorthwindsApi.Services.Customers
             var customers = await _customerRepository.SelectAllCustomers();
                 
             return customers.Select(customer => _mapper.MapTo(customer));
+        }
+
+        /// <summary>
+        /// Implements <see cref="ICustomerService.GetCustomerById(string)"/>
+        /// </summary>
+        /// <param name="id">Unique id of <see cref="Customer"/></param>
+        /// <returns><see cref="Customer"/></returns>
+        public async Task<Customer> GetCustomerById(string id)
+        {
+            return _mapper.MapTo(await _customerRepository.SelectCustomerById(id));
         }
     }
 }

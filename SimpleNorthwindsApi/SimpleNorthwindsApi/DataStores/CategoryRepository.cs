@@ -1,4 +1,7 @@
-﻿using SimpleNorthwindsApi.DataEntities;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using SimpleNorthwindsApi.Configuration;
+using SimpleNorthwindsApi.DataEntities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,24 +10,51 @@ namespace SimpleNorthwindsApi.DataStores
 {
     public class CategoryRepository : ICategoryRepository
     {
-        public Task DeleteCategory(string id)
+        private readonly NorthwindsConfiguration _northwindsConfiguration;
+
+        public CategoryRepository(NorthwindsConfiguration northwindsConfiguration)
         {
-            throw new NotImplementedException();
+            _northwindsConfiguration = northwindsConfiguration ?? throw new ArgumentNullException(nameof(northwindsConfiguration));
         }
 
-        public Task InsertCategory(CategoryDataEntity category)
+        public async Task DeleteCategory(string id)
         {
-            throw new NotImplementedException();
+            var sql = "DELETE FROM Categories WHERE [CategoryId] = @Id";
+
+            using (var connection = new SqlConnection(_northwindsConfiguration.ConnectionString))
+            {
+                await connection.ExecuteAsync(sql, new { Id = id });
+            }
         }
 
-        public Task<IEnumerable<CategoryDataEntity>> SelectAllCategories()
+        public async Task InsertCategory(CategoryDataEntity category)
         {
-            throw new NotImplementedException();
+            var sql = "INSERT INTO Categories (CategoryName, Description) VALUES (@CategoryName, @Description)";
+
+            using (var connection = new SqlConnection(_northwindsConfiguration.ConnectionString))
+            {
+                await connection.ExecuteAsync(sql, category);
+            }
         }
 
-        public Task<CategoryDataEntity> SelectCategoryById(string id)
+        public async Task<IEnumerable<CategoryDataEntity>> SelectAllCategories()
         {
-            throw new NotImplementedException();
+            var sql = "SELECT * FROM Categories";
+
+            using (var connection = new SqlConnection(_northwindsConfiguration.ConnectionString))
+            {
+                return await connection.QueryAsync<CategoryDataEntity>(sql);
+            }
+        }
+
+        public async Task<CategoryDataEntity> SelectCategoryById(string id)
+        {
+            var sql = "SELECT * FROM Categories WHERE [CategoryId] = @Id";
+
+            using (var connection = new SqlConnection(_northwindsConfiguration.ConnectionString))
+            {
+                return await connection.QuerySingleAsync<CategoryDataEntity>(sql, new { Id = id });
+            }
         }
     }
 }

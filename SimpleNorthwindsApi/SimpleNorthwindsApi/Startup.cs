@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleNorthwindsApi.Configuration;
 using SimpleNorthwindsApi.DataStores;
+using SimpleNorthwindsApi.Services.Categories;
 using SimpleNorthwindsApi.Services.Customers;
 using SimpleNorthwindsApi.Services.Mappers;
 using System.IO;
@@ -24,8 +25,12 @@ namespace SimpleNorthwindsApi
         public void ConfigureServices(IServiceCollection services)
         {
             BindNorthwindsConfiguration(services);
-            services.AddSingleton<ICustomerRepository, CustomerRepository>(sp => new CustomerRepository(sp.GetRequiredService<NorthwindsConfiguration>()));
+
+            services.AddSingleton<ICustomerRepository, CustomerRepository>();
             services.AddSingleton<ICustomerService, CustomerService>(sp => new CustomerService(new CustomerMapper(), sp.GetRequiredService<ICustomerRepository>()));
+
+            services.AddSingleton<ICategoryRepository, CategoryRepository>();
+            services.AddSingleton<ICategoryService, CategoryService>(sp => new CategoryService(new CategoryMapper(), sp.GetRequiredService<ICategoryRepository>()));
 
             services.AddControllers();
         }

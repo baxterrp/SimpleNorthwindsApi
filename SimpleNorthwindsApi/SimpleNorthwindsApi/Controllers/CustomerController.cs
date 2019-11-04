@@ -15,33 +15,33 @@ namespace SimpleNorthwindsApi.Controllers
         }
 
         [HttpGet("/customers")]
-        public async Task<IActionResult> GetAllCustomers()
+        public IActionResult GetAllCustomers()
         {
-            var customers = await _customerService.GetAllCustomers();
+            var customers = _customerService.GetAllCustomers();
 
             return Ok(customers);
         }
 
         [HttpGet("/customers/{id}")]
-        public async Task<IActionResult> FindCustomerById([FromRoute]string id)
+        public IActionResult FindCustomerById([FromRoute]string id)
         {
-            var customer = await _customerService.GetCustomerById(id);
+            var customer = _customerService.GetCustomerById(id);
 
             return Ok(customer);
         }
 
         [HttpPost("/customers")]
-        public async Task<IActionResult> AddNewCustomer([FromBody]Common.Customer customer)
+        public IActionResult AddNewCustomer([FromBody]Common.Customer customer)
         {
-            await _customerService.AddNewCustomer(customer);
+            _customerService.AddNewCustomer(customer);
 
             return Ok();
         }
 
         [HttpDelete("/customers/{id}")]
-        public async Task<IActionResult> DeleteCustomer([FromRoute]string id)
+        public IActionResult DeleteCustomer([FromRoute]string id)
         {
-            await _customerService.DeleteCustomer(id);
+            _customerService.DeleteCustomer(id);
 
             return Ok();
         }

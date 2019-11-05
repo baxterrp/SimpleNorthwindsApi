@@ -5,7 +5,6 @@ using SimpleNorthwindsApi.Server.Services.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SimpleNorthwindsApi.Server.Services.Categories
 {
@@ -20,26 +19,26 @@ namespace SimpleNorthwindsApi.Server.Services.Categories
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task AddNewCategory(Category category)
+        public void AddNewCategory(Category category)
         {
-            await _categoryRepository.InsertCategory(_mapper.MapFrom(category)); 
+            _categoryRepository.InsertCategory(_mapper.MapFrom(category)); 
         }
 
-        public async Task DeleteCategory(string id)
+        public void DeleteCategory(string id)
         {
-            await _categoryRepository.DeleteCategory(id);
+             _categoryRepository.DeleteCategory(id);
         }
 
-        public async Task<Category> FindCategoryById(string id)
+        public Category FindCategoryById(string id)
         {
-            var category = await _categoryRepository.SelectCategoryById(id);
+            var category = _categoryRepository.SelectCategoryById(id);
 
             return _mapper.MapTo(category);
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public IEnumerable<Category> GetAllCategories()
         {
-            var categories = await _categoryRepository.SelectAllCategories();
+            var categories = _categoryRepository.SelectAllCategories();
 
             return categories.Select(category => _mapper.MapTo(category));
         }

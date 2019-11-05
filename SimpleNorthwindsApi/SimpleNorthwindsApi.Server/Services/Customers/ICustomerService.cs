@@ -6,9 +6,9 @@ namespace SimpleNorthwindsApi.Server.Services.Customers
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<Customer>> GetAllCustomers();
-        Task<Customer> GetCustomerById(string id);
-        Task AddNewCustomer(Customer customer);
-        Task DeleteCustomer(string id);
+        IEnumerable<Customer> GetAllCustomers();
+        Customer GetCustomerById(string id);
+        void AddNewCustomer(Customer customer);
+        void DeleteCustomer(string id);
     }
 }

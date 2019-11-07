@@ -9,5 +9,6 @@ namespace SimpleNorthwindsApi.Server.DataStores
         CategoryDataEntity SelectCategoryById(string id);
         void InsertCategory(CategoryDataEntity category);
         void DeleteCategory(string id);
+        void UpdateCategory(CategoryDataEntity category);
     }
 }

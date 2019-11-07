@@ -42,5 +42,10 @@ namespace SimpleNorthwindsApi.Server.Services.Categories
 
             return categories.Select(category => _mapper.MapTo(category));
         }
+
+        public void UpdateCategory(Category category)
+        {
+            _categoryRepository.UpdateCategory(_mapper.MapFrom(category));
+        }
     }
 }

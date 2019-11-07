@@ -35,5 +35,13 @@ namespace SimpleNorthwindsApi.Server.Controllers
 
             return Ok();
         }
+
+        [HttpPut("/categories")]
+        public IActionResult UpdateCategory([FromBody]Category category)
+        {
+            _categoryService.UpdateCategory(category);
+
+            return Ok();
+        }
     }
 }

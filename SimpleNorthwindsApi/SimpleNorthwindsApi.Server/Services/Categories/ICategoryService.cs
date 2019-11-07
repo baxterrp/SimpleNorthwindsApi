@@ -9,5 +9,6 @@ namespace SimpleNorthwindsApi.Server.Services.Categories
         Category FindCategoryById(string id);
         void AddNewCategory(Category category);
         void DeleteCategory(string id);
+        void UpdateCategory(Category category);
     }
 }

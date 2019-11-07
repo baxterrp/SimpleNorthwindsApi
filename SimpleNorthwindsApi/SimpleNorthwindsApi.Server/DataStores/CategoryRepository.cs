@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using SimpleNorthwindsApi.Common;
 using SimpleNorthwindsApi.Server.Configuration;
 using SimpleNorthwindsApi.Server.DataEntities;
 using System;
@@ -53,6 +54,18 @@ namespace SimpleNorthwindsApi.Server.DataStores
             using (var connection = new SqlConnection(_northwindsConfiguration.ConnectionString))
             {
                 return connection.QuerySingle<CategoryDataEntity>(sql, new { Id = id });
+            }
+        }
+
+        public void UpdateCategory(CategoryDataEntity category)
+        {
+            var sql = "UPDATE Categories SET" +
+                "[CategoryName] = @CategoryName," +
+                "[Description] = @Description WHERE [CategoryId] = @CategoryId";
+
+            using (var connection = new SqlConnection(_northwindsConfiguration.ConnectionString))
+            {
+                connection.Execute(sql, category);
             }
         }
     }

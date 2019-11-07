@@ -15,33 +15,78 @@ namespace SimpleNorthwindsApi.Server.Controllers
         }
 
         [HttpGet("/categories")]
-        public IActionResult GetAllCategories() => Ok(_categoryService.GetAllCategories());
+        public IActionResult GetAllCategories()
+        {
+            try
+            {
+                var categories = _categoryService.GetAllCategories();
+
+                return Ok(categories);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
 
         [HttpGet("/categories/{id}")]
-        public IActionResult FindCategoryById([FromRoute]string id) => Ok(_categoryService.FindCategoryById(id));
+        public IActionResult FindCategoryById([FromRoute]string id) 
+        {
+            try
+            {
+                var category = _categoryService.FindCategoryById(id);
+
+                return Ok(category);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
 
         [HttpPost("/categories")]
         public IActionResult AddNewCategory([FromBody]Category category)
         {
-            _categoryService.AddNewCategory(category);
+            try
+            {
+                _categoryService.AddNewCategory(category);
 
-            return Ok();
+                return Ok();
+            }
+            catch 
+            { 
+                return BadRequest(); 
+            }
         }
 
         [HttpDelete("/categories/{id}")]
         public IActionResult DeleteCategory([FromRoute]string id)
         {
-            _categoryService.DeleteCategory(id);
+            try
+            {
+                _categoryService.DeleteCategory(id);
 
-            return Ok();
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("/categories")]
         public IActionResult UpdateCategory([FromBody]Category category)
         {
-            _categoryService.UpdateCategory(category);
+            try
+            {
+                _categoryService.UpdateCategory(category);
 
-            return Ok();
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

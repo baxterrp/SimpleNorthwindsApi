@@ -21,17 +21,26 @@ namespace SimpleNorthwindsApi.Server.Services.Categories
 
         public void AddNewCategory(Category category)
         {
-            _categoryRepository.InsertCategory(_mapper.MapFrom(category)); 
+            if (category is null) throw new ArgumentNullException(nameof(category));
+            if (string.IsNullOrWhiteSpace(category.Name)) throw new ArgumentException($"Must include a category name");
+
+            _categoryRepository.InsertCategory(_mapper.MapFrom(category));
         }
 
         public void DeleteCategory(string id)
         {
-             _categoryRepository.DeleteCategory(id);
+            if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
+
+            _categoryRepository.DeleteCategory(id);
         }
 
         public Category FindCategoryById(string id)
         {
+            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
+
             var category = _categoryRepository.SelectCategoryById(id);
+
+            if (category is null) throw new InvalidOperationException($"No category found with id {id}");
 
             return _mapper.MapTo(category);
         }
@@ -40,11 +49,16 @@ namespace SimpleNorthwindsApi.Server.Services.Categories
         {
             var categories = _categoryRepository.SelectAllCategories();
 
+            if (!categories?.Any() ?? false) throw new InvalidOperationException($"No categories found");
+
             return categories.Select(category => _mapper.MapTo(category));
         }
 
         public void UpdateCategory(Category category)
         {
+            if (category is null) throw new ArgumentNullException(nameof(category));
+            if (string.IsNullOrWhiteSpace(category.Name)) throw new ArgumentException($"Category must have a name");
+
             _categoryRepository.UpdateCategory(_mapper.MapFrom(category));
         }
     }

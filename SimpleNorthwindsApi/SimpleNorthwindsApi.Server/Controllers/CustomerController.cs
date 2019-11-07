@@ -45,5 +45,16 @@ namespace SimpleNorthwindsApi.Server.Controllers
 
             return Ok();
         }
+
+        [HttpPut("/customers/{id}")]
+        public IActionResult UpdateCustomer([FromRoute]string id, [FromBody]Customer customer)
+        {
+            // I did this to show you can pass data via route and body in one request
+            customer.Id = id;
+
+            _customerService.UpdateCustomer(customer);
+
+            return Ok();
+        }
     }
 }

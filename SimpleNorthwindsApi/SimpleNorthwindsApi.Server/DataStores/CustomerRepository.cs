@@ -56,5 +56,25 @@ namespace SimpleNorthwindsApi.Server.DataStores
                 return connection.QuerySingle<CustomerDataEntity>(sql, new { Id = id });
             }
         }
+
+        public void UpdateCustomer(CustomerDataEntity customer)
+        {
+            var sql = "UPDATE Customers SET" +
+                " [CompanyName] = @CompanyName," +
+                " [ContactName] = @ContactName," +
+                " [ContactTitle] = @ContactTitle," +
+                " [Address] = @Address," +
+                " [City] = @City," +
+                " [Region] = @Region," +
+                " [PostalCode] = @PostalCode," +
+                " [Country] = @Country," +
+                " [Phone] = @Phone," +
+                " [Fax] = @Fax WHERE [CustomerId] = @CustomerId";
+
+            using (var connection = new SqlConnection(_configuration.ConnectionString))
+            {
+                connection.Execute(sql, customer);
+            }
+        }
     }
 }

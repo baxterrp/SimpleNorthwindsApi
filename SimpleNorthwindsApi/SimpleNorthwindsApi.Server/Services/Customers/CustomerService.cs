@@ -44,5 +44,10 @@ namespace SimpleNorthwindsApi.Server.Services.Customers
         {
             return _mapper.MapTo(_customerRepository.SelectCustomerById(id));
         }
+
+        public void UpdateCustomer(Customer customer)
+        {
+            _customerRepository.UpdateCustomer(_mapper.MapFrom(customer));
+        }
     }
 }

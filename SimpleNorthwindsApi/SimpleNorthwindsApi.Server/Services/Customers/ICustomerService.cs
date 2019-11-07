@@ -10,5 +10,6 @@ namespace SimpleNorthwindsApi.Server.Services.Customers
         Customer GetCustomerById(string id);
         void AddNewCustomer(Customer customer);
         void DeleteCustomer(string id);
+        void UpdateCustomer(Customer customer);
     }
 }

@@ -9,5 +9,6 @@ namespace SimpleNorthwindsApi.Server.DataStores
         CustomerDataEntity SelectCustomerById(string id);
         void InsertNewCustomer(CustomerDataEntity customer);
         void DeleteCustomer(string id);
+        void UpdateCustomer(CustomerDataEntity customer);
     }
 }

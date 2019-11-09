@@ -1,14 +1,15 @@
 ﻿using SimpleNorthwindsApi.Common;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SimpleNorthwindsApi.Server.Services.Categories
 {
     public interface ICategoryService
     {
-        IEnumerable<Category> GetAllCategories();
-        Category FindCategoryById(string id);
-        void AddNewCategory(Category category);
-        void DeleteCategory(string id);
-        void UpdateCategory(Category category);
+        Task<IEnumerable<Category>> GetAllCategories();
+        Task<Category> FindCategoryById(string id);
+        Task AddNewCategory(Category category);
+        Task DeleteCategory(string id);
+        Task UpdateCategory(Category category);
     }
 }

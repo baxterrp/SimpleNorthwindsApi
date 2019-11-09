@@ -5,6 +5,7 @@ using SimpleNorthwindsApi.Server.Services.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SimpleNorthwindsApi.Server.Services.Categories
 {
@@ -19,47 +20,47 @@ namespace SimpleNorthwindsApi.Server.Services.Categories
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void AddNewCategory(Category category)
+        public async Task AddNewCategory(Category category)
         {
             if (category is null) throw new ArgumentNullException(nameof(category));
             if (string.IsNullOrWhiteSpace(category.Name)) throw new ArgumentException($"Must include a category name");
 
-            _categoryRepository.InsertCategory(_mapper.MapFrom(category));
+            await _categoryRepository.InsertCategory(_mapper.MapFrom(category));
         }
 
-        public void DeleteCategory(string id)
+        public async Task DeleteCategory(string id)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
 
-            _categoryRepository.DeleteCategory(id);
+            await _categoryRepository.DeleteCategory(id);
         }
 
-        public Category FindCategoryById(string id)
+        public async Task<Category> FindCategoryById(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
 
-            var category = _categoryRepository.SelectCategoryById(id);
+            var category = await _categoryRepository.SelectCategoryById(id);
 
             if (category is null) throw new InvalidOperationException($"No category found with id {id}");
 
             return _mapper.MapTo(category);
         }
 
-        public IEnumerable<Category> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetAllCategories()
         {
-            var categories = _categoryRepository.SelectAllCategories();
+            var categories = await _categoryRepository.SelectAllCategories();
 
             if (!categories?.Any() ?? false) throw new InvalidOperationException($"No categories found");
 
             return categories.Select(category => _mapper.MapTo(category));
         }
 
-        public void UpdateCategory(Category category)
+        public async Task UpdateCategory(Category category)
         {
             if (category is null) throw new ArgumentNullException(nameof(category));
             if (string.IsNullOrWhiteSpace(category.Name)) throw new ArgumentException($"Category must have a name");
 
-            _categoryRepository.UpdateCategory(_mapper.MapFrom(category));
+            await _categoryRepository.UpdateCategory(_mapper.MapFrom(category));
         }
     }
 }

@@ -6,10 +6,10 @@ namespace SimpleNorthwindsApi.Server.Services.Customers
 {
     public interface ICustomerService
     {
-        IEnumerable<Customer> GetAllCustomers();
-        Customer GetCustomerById(string id);
-        void AddNewCustomer(Customer customer);
-        void DeleteCustomer(string id);
-        void UpdateCustomer(Customer customer);
+        Task<IEnumerable<Customer>> GetAllCustomers();
+        Task<Customer> GetCustomerById(string id);
+        Task AddNewCustomer(Customer customer);
+        Task DeleteCustomer(string id);
+        Task UpdateCustomer(Customer customer);
     }
 }

@@ -5,6 +5,7 @@ using SimpleNorthwindsApi.Server.Services.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SimpleNorthwindsApi.Server.Services.Customers
 {
@@ -19,35 +20,33 @@ namespace SimpleNorthwindsApi.Server.Services.Customers
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
         }
 
-        public ICustomerRepository CustomerRepository => _customerRepository;
-
-        public void AddNewCustomer(Customer customer)
+        public async Task AddNewCustomer(Customer customer)
         {
             var customerEntity = _mapper.MapFrom(customer);
 
-            _customerRepository.InsertNewCustomer(customerEntity);
+            await _customerRepository.InsertNewCustomer(customerEntity);
         }
 
-        public void DeleteCustomer(string id)
+        public async Task DeleteCustomer(string id)
         {
-            _customerRepository.DeleteCustomer(id);
+            await _customerRepository.DeleteCustomer(id);
         }
 
-        public IEnumerable<Customer> GetAllCustomers()
+        public async Task<IEnumerable<Customer>> GetAllCustomers()
         {
-            var customers = _customerRepository.SelectAllCustomers();
+            var customers = await _customerRepository.SelectAllCustomers();
                 
             return customers.Select(customer => _mapper.MapTo(customer));
         }
 
-        public Customer GetCustomerById(string id)
+        public async Task<Customer> GetCustomerById(string id)
         {
-            return _mapper.MapTo(_customerRepository.SelectCustomerById(id));
+            return _mapper.MapTo(await _customerRepository.SelectCustomerById(id));
         }
 
-        public void UpdateCustomer(Customer customer)
+        public async Task UpdateCustomer(Customer customer)
         {
-            _customerRepository.UpdateCustomer(_mapper.MapFrom(customer));
+            await _customerRepository.UpdateCustomer(_mapper.MapFrom(customer));
         }
     }
 }

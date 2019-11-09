@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SimpleNorthwindsApi.Common;
 using SimpleNorthwindsApi.Server.Services.Categories;
@@ -15,11 +16,11 @@ namespace SimpleNorthwindsApi.Server.Controllers
         }
 
         [HttpGet("/categories")]
-        public IActionResult GetAllCategories()
+        public async Task<IActionResult> GetAllCategories()
         {
             try
             {
-                var categories = _categoryService.GetAllCategories();
+                var categories = await _categoryService.GetAllCategories();
 
                 return Ok(categories);
             }
@@ -30,11 +31,11 @@ namespace SimpleNorthwindsApi.Server.Controllers
         }
 
         [HttpGet("/categories/{id}")]
-        public IActionResult FindCategoryById([FromRoute]string id) 
+        public async Task<IActionResult> FindCategoryById([FromRoute]string id) 
         {
             try
             {
-                var category = _categoryService.FindCategoryById(id);
+                var category = await _categoryService.FindCategoryById(id);
 
                 return Ok(category);
             }
@@ -45,11 +46,11 @@ namespace SimpleNorthwindsApi.Server.Controllers
         }
 
         [HttpPost("/categories")]
-        public IActionResult AddNewCategory([FromBody]Category category)
+        public async Task<IActionResult> AddNewCategory([FromBody]Category category)
         {
             try
             {
-                _categoryService.AddNewCategory(category);
+                await _categoryService.AddNewCategory(category);
 
                 return Ok();
             }
@@ -60,11 +61,11 @@ namespace SimpleNorthwindsApi.Server.Controllers
         }
 
         [HttpDelete("/categories/{id}")]
-        public IActionResult DeleteCategory([FromRoute]string id)
+        public async Task<IActionResult> DeleteCategory([FromRoute]string id)
         {
             try
             {
-                _categoryService.DeleteCategory(id);
+                await _categoryService.DeleteCategory(id);
 
                 return Ok();
             }
@@ -75,11 +76,11 @@ namespace SimpleNorthwindsApi.Server.Controllers
         }
 
         [HttpPut("/categories")]
-        public IActionResult UpdateCategory([FromBody]Category category)
+        public async Task<IActionResult> UpdateCategory([FromBody]Category category)
         {
             try
             {
-                _categoryService.UpdateCategory(category);
+                await _categoryService.UpdateCategory(category);
 
                 return Ok();
             }

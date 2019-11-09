@@ -4,6 +4,7 @@ using SimpleNorthwindsApi.Server.DataEntities;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace SimpleNorthwindsApi.Server.DataStores
 {
@@ -16,48 +17,48 @@ namespace SimpleNorthwindsApi.Server.DataStores
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        public void DeleteCustomer(string id)
+        public async Task DeleteCustomer(string id)
         {
             var sql = "DELETE FROM Customers WHERE [CustomerId] = @Id";
 
             using (var connection = new SqlConnection(_configuration.ConnectionString))
             {
-                connection.Execute(sql, new { Id = id });
+                await connection.ExecuteAsync(sql, new { Id = id });
             }
         }
 
-        public void InsertNewCustomer(CustomerDataEntity customer)
+        public async Task InsertNewCustomer(CustomerDataEntity customer)
         {
             var sql = "INSERT INTO Customers (CustomerId, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax)" +
                 " VALUES (@CustomerId, @ContactName, @CompanyName, @ContactTitle, @Address, @City, @Region, @PostalCode, @Country, @Phone, @Fax)";
 
             using (var connection = new SqlConnection(_configuration.ConnectionString))
             {
-                connection.Execute(sql, customer);
+                await connection.ExecuteAsync(sql, customer);
             }
         }
 
-        public IEnumerable<CustomerDataEntity> SelectAllCustomers()
+        public async Task<IEnumerable<CustomerDataEntity>> SelectAllCustomers()
         {
             var sql = "SELECT * FROM Customers";
 
             using (var connection = new SqlConnection(_configuration.ConnectionString))
             {
-                return connection.Query<CustomerDataEntity>(sql) ?? new List<CustomerDataEntity>();
+                return await connection.QueryAsync<CustomerDataEntity>(sql) ?? new List<CustomerDataEntity>();
             }
         }
 
-        public CustomerDataEntity SelectCustomerById(string id)
+        public async Task<CustomerDataEntity> SelectCustomerById(string id)
         {
             var sql = "SELECT * FROM Customers WHERE [CustomerId] = @Id";
 
             using (var connection = new SqlConnection(_configuration.ConnectionString))
             {
-                return connection.QuerySingle<CustomerDataEntity>(sql, new { Id = id });
+                return await connection.QuerySingleAsync<CustomerDataEntity>(sql, new { Id = id });
             }
         }
 
-        public void UpdateCustomer(CustomerDataEntity customer)
+        public async Task UpdateCustomer(CustomerDataEntity customer)
         {
             var sql = "UPDATE Customers SET" +
                 " [CompanyName] = @CompanyName," +
@@ -73,7 +74,7 @@ namespace SimpleNorthwindsApi.Server.DataStores
 
             using (var connection = new SqlConnection(_configuration.ConnectionString))
             {
-                connection.Execute(sql, customer);
+                await connection.ExecuteAsync(sql, customer);
             }
         }
     }

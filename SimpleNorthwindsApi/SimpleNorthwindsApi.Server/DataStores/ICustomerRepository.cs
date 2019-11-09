@@ -1,14 +1,15 @@
 ﻿using SimpleNorthwindsApi.Server.DataEntities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SimpleNorthwindsApi.Server.DataStores
 {
     public interface ICustomerRepository
     {
-        IEnumerable<CustomerDataEntity> SelectAllCustomers();
-        CustomerDataEntity SelectCustomerById(string id);
-        void InsertNewCustomer(CustomerDataEntity customer);
-        void DeleteCustomer(string id);
-        void UpdateCustomer(CustomerDataEntity customer);
+        Task<IEnumerable<CustomerDataEntity>> SelectAllCustomers();
+        Task<CustomerDataEntity> SelectCustomerById(string id);
+        Task InsertNewCustomer(CustomerDataEntity customer);
+        Task DeleteCustomer(string id);
+        Task UpdateCustomer(CustomerDataEntity customer);
     }
 }

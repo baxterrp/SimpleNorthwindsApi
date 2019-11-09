@@ -2,6 +2,7 @@
 using SimpleNorthwindsApi.Common;
 using SimpleNorthwindsApi.Server.Services.Customers;
 using System;
+using System.Threading.Tasks;
 
 namespace SimpleNorthwindsApi.Server.Controllers
 {
@@ -15,44 +16,44 @@ namespace SimpleNorthwindsApi.Server.Controllers
         }
 
         [HttpGet("/customers")]
-        public IActionResult GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers()
         {
-            var customers = _customerService.GetAllCustomers();
+            var customers = await _customerService.GetAllCustomers();
 
             return Ok(customers);
         }
 
         [HttpGet("/customers/{id}")]
-        public IActionResult FindCustomerById([FromRoute]string id)
+        public async Task<IActionResult> FindCustomerById([FromRoute]string id)
         {
-            var customer = _customerService.GetCustomerById(id);
+            var customer = await _customerService.GetCustomerById(id);
 
             return Ok(customer);
         }
 
         [HttpPost("/customers")]
-        public IActionResult AddNewCustomer([FromBody]Customer customer)
+        public async Task<IActionResult> AddNewCustomer([FromBody]Customer customer)
         {
-            _customerService.AddNewCustomer(customer);
+            await _customerService.AddNewCustomer(customer);
 
             return Ok();
         }
 
         [HttpDelete("/customers/{id}")]
-        public IActionResult DeleteCustomer([FromRoute]string id)
+        public async Task<IActionResult> DeleteCustomer([FromRoute]string id)
         {
-            _customerService.DeleteCustomer(id);
+            await _customerService.DeleteCustomer(id);
 
             return Ok();
         }
 
         [HttpPut("/customers/{id}")]
-        public IActionResult UpdateCustomer([FromRoute]string id, [FromBody]Customer customer)
+        public async Task<IActionResult> UpdateCustomer([FromRoute]string id, [FromBody]Customer customer)
         {
             // I did this to show you can pass data via route and body in one request
             customer.Id = id;
 
-            _customerService.UpdateCustomer(customer);
+            await _customerService.UpdateCustomer(customer);
 
             return Ok();
         }
